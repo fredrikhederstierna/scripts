@@ -3,12 +3,14 @@
 # Create a git archive of repository including non-committed local diffs.
 # Fredrik Hederstierna 2017
 
-TARGET_ARCHIVE_NAME=gcc-7-master
+TARGET_ARCHIVE_NAME=gdb-9.3-master
 
-GIT_MASTER_SRC_PATH=/home/fredrik/gcc_master
-GIT_ARCHIVE_DEST_PATH=/home/fredrik/gcc_master_copy2
+# this should point into the git repo root
+GIT_MASTER_SRC_PATH=/home/fredrik/gdb_master/binutils-gdb
+# this is where tar-ed results archive are stored
+GIT_ARCHIVE_DEST_PATH=/home/fredrik/gdb_master/my_copy
 
-# goto gcc master git
+# goto master git
 cd $GIT_MASTER_SRC_PATH
 
 # command to create temporary stash commit
@@ -20,7 +22,8 @@ git archive --format=tar --prefix=$TARGET_ARCHIVE_NAME/ -o $GIT_ARCHIVE_DEST_PAT
 
 # compressing archive
 echo "Compressing archive..."
-bzip2 -f $GIT_ARCHIVE_DEST_PATH/$TARGET_ARCHIVE_NAME.tar
+#bzip2 -f $GIT_ARCHIVE_DEST_PATH/$TARGET_ARCHIVE_NAME.tar
+xz -9 $GIT_ARCHIVE_DEST_PATH/$TARGET_ARCHIVE_NAME.tar
 
 # garbage collect temporary stash commit
 echo "Garbage collect temporary git stash..."
